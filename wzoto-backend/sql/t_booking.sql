@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `t_booking` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `parent_id` BIGINT NOT NULL COMMENT '家长用户ID',
+    `tutor_id` BIGINT NOT NULL COMMENT '教员用户ID',
+    `tutor_profile_id` BIGINT NOT NULL COMMENT '教员档案ID',
+    `subject` VARCHAR(64) NOT NULL COMMENT '辅导科目',
+    `booking_date` DATE NOT NULL COMMENT '上课日期',
+    `start_time` TIME NOT NULL COMMENT '开始时间',
+    `end_time` TIME NOT NULL COMMENT '结束时间',
+    `address` VARCHAR(256) DEFAULT NULL COMMENT '上课地址',
+    `message` VARCHAR(512) DEFAULT NULL COMMENT '家长留言',
+    `status` VARCHAR(16) NOT NULL DEFAULT 'PENDING' COMMENT '状态：PENDING/CONFIRMED/COMPLETED/CANCELLED/REJECTED',
+    `reply` VARCHAR(256) DEFAULT NULL COMMENT '教员回复',
+    `deleted` INT NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    INDEX `idx_parent_id` (`parent_id`),
+    INDEX `idx_tutor_id` (`tutor_id`),
+    INDEX `idx_status` (`status`),
+    INDEX `idx_booking_date` (`booking_date`),
+    INDEX `idx_tutor_status` (`tutor_id`, `status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='预约订单表';

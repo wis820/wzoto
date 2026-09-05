@@ -1,0 +1,58 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: Q0DeR-MaG1C-BrAnCh-Fo2-NoN-GiT-Or-No-C0MmIt
+nodes_managed: true
+exported_at: "2026-09-05T06:45:01Z"
+modules:
+    "":
+        dir_name: 学霸到家家教撮合平台（根工程）
+        title: 学霸到家家教撮合平台（根工程）
+        scope:
+            - docs/
+            - prototype/
+            - fwanglianyidawzotowzoto-frontend/
+            - backend-err.log
+            - backend.log
+            - build_log.txt
+        source_files: []
+        children:
+            - documentation_and_prototype
+            - wzoto_backend
+            - wzoto_frontend
+        depends_on: []
+        related_to: []
+    documentation_and_prototype:
+        dir_name: 产品文档与移动端原型
+        title: 产品文档与移动端原型
+        scope:
+            - docs/
+            - prototype/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: wzoto_backend
+            - path: wzoto_frontend
+    wzoto_backend:
+        dir_name: 学霸到家后端服务（DDD分层架构）
+        title: 学霸到家后端服务（DDD分层架构）
+        scope:
+            - wzoto-backend/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: documentation_and_prototype
+            - path: wzoto_frontend
+    wzoto_frontend:
+        dir_name: 学霸到家前端（Vue3 + Vite 单页应用）
+        title: 学霸到家前端（Vue3 + Vite 单页应用）
+        scope:
+            - wzoto-frontend/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: documentation_and_prototype
+            - path: wzoto_backend

@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `t_ai_tutor_optimization` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `user_id` BIGINT NOT NULL COMMENT '教员用户ID',
+    `optimization_type` VARCHAR(32) NOT NULL COMMENT '优化类型：RESUME-简历优化, PRICING-定价分析',
+    `university` VARCHAR(128) DEFAULT NULL COMMENT '学校名称',
+    `major` VARCHAR(64) DEFAULT NULL COMMENT '专业',
+    `grade` VARCHAR(16) DEFAULT NULL COMMENT '年级',
+    `subjects` VARCHAR(512) DEFAULT NULL COMMENT '辅导科目',
+    `current_bio` TEXT DEFAULT NULL COMMENT '当前个人简介',
+    `current_experience` TEXT DEFAULT NULL COMMENT '当前教学经验',
+    `current_rate` INT DEFAULT NULL COMMENT '当前时薪',
+    `optimized_content` TEXT DEFAULT NULL COMMENT 'AI优化结果JSON',
+    `preview_content` TEXT DEFAULT NULL COMMENT '预览摘要',
+    `is_member_report` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否会员免费',
+    `price` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '价格',
+    `payment_status` VARCHAR(16) NOT NULL DEFAULT 'FREE' COMMENT '支付状态：FREE/PAID',
+    `deleted` INT NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+    `created_at` DATETIME DEFAULT NULL COMMENT '创建时间',
+    `updated_at` DATETIME DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`),
+    INDEX `idx_type` (`optimization_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI教员优化记录表';

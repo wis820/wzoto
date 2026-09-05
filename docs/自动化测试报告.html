@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学霸到家 · 自动化测试报告</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f6fa;color:#1a1a1a;line-height:1.6}
+.header{background:linear-gradient(135deg,#4F6EF7,#7B93FA);color:#fff;padding:48px 24px;text-align:center}
+.header h1{font-size:28px;margin-bottom:8px}
+.header p{opacity:.9;font-size:15px}
+.header .meta{margin-top:16px;display:flex;justify-content:center;gap:20px;font-size:13px;flex-wrap:wrap}
+.header .meta span{background:rgba(255,255,255,.2);padding:4px 14px;border-radius:20px}
+.container{max-width:920px;margin:0 auto;padding:24px 16px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.summary-card{background:#fff;border-radius:12px;padding:20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.summary-card .num{font-size:36px;font-weight:700}
+.summary-card .label{font-size:13px;color:#666;margin-top:4px}
+.summary-card.total .num{color:#4F6EF7}
+.summary-card.success .num{color:#52C41A}
+.summary-card.warn .num{color:#FAAD14}
+.section{background:#fff;border-radius:12px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #f0f0f0}
+.section-header h2{font-size:16px;font-weight:600}
+.badge{padding:3px 12px;border-radius:12px;font-size:12px;color:#fff}
+.badge.pass{background:#52C41A}
+.section-body{padding:20px}
+.section-body img{width:100%;border-radius:8px;border:1px solid #e8e8e8;cursor:pointer;transition:transform .2s}
+.section-body img:hover{transform:scale(1.02)}
+.section-body .desc{font-size:14px;color:#666;margin-bottom:12px}
+.section-body .url{font-size:12px;color:#999;font-family:monospace;margin-top:10px;word-break:break-all}
+.api-section{background:#fff;border-radius:12px;margin-bottom:24px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.api-section h2{font-size:18px;margin-bottom:16px}
+.api-item{padding:10px 14px;border:1px solid #f0f0f0;border-radius:8px;margin-bottom:6px;font-size:13px;font-family:monospace;display:flex;justify-content:space-between;align-items:center}
+.api-item .url-part{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.api-item .st{font-weight:700;margin-left:12px;flex-shrink:0}
+.st.ok{color:#52C41A}
+.st.err{color:#FF4D4F}
+.st.redir{color:#FAAD14}
+.footer{text-align:center;padding:24px;color:#999;font-size:13px}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;justify-content:center;align-items:center;cursor:zoom-out}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90%;max-height:90%;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.5)}
+@media(max-width:600px){.summary{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <img id="lightbox-img" src="" alt="放大截图" />
+</div>
+<div class="header">
+  <h1>📚 学霸到家 · 自动化测试报告</h1>
+  <p>家长端小学生全科学习功能 + 学生端7大学习页面 — 端到端自动化 UI 测试</p>
+  <div class="meta">
+    <span>🕐 2026/7/23 19:58:24</span>
+    <span>🌐 http://localhost:5174</span>
+    <span>📱 375×812 @2x</span>
+    <span>🔧 Playwright Chromium</span>
+  </div>
+</div>
+<div class="container">
+  <div class="summary">
+    <div class="summary-card total"><div class="num">22</div><div class="label">测试页面</div></div>
+    <div class="summary-card success"><div class="num">22</div><div class="label">截图成功</div></div>
+    <div class="summary-card total"><div class="num">120</div><div class="label">API 调用</div></div>
+    <div class="summary-card success"><div class="num">93</div><div class="label">API 成功</div></div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-header">
+      <h2>01. 登录页面 - 微信一键登录 + 开发模式快捷登录</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">登录页面 - 微信一键登录 + 开发模式快捷登录</p>
+      <img src="screenshots/01_login_page.png" alt="01_login_page" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/login</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>02. 首页 - 家长端功能入口（找教员、小学学习、AI学情诊断、预约管理）</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">首页 - 家长端功能入口（找教员、小学学习、AI学情诊断、预约管理）</p>
+      <img src="screenshots/03_home_page.png" alt="03_home_page" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>03. 学习首页 - 今日任务进度环、快速入口九宫格、薄弱知识点提示</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">学习首页 - 今日任务进度环、快速入口九宫格、薄弱知识点提示</p>
+      <img src="screenshots/04_learning_home.png" alt="04_learning_home" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>04. 子女管理 - 空状态展示，"+ 新增子女"按钮</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">子女管理 - 空状态展示，"+ 新增子女"按钮</p>
+      <img src="screenshots/05_child_manage.png" alt="05_child_manage" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/children</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>05. 子女管理 - 新增子女弹窗表单（姓名/年级/教材版本/学校）</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">子女管理 - 新增子女弹窗表单（姓名/年级/教材版本/学校）</p>
+      <img src="screenshots/05b_child_form.png" alt="05b_child_form" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/children</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>06. 子女管理 - 填写完成的子女表单</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">子女管理 - 填写完成的子女表单</p>
+      <img src="screenshots/05c_child_form_filled.png" alt="05c_child_form_filled" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/children</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>07. 子女管理 - 创建子女后列表</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">子女管理 - 创建子女后列表</p>
+      <img src="screenshots/05d_child_created.png" alt="05d_child_created" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/children</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>08. 学习计划 - 每日时长设置、学科权重滑块、专项练习开关与下发</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">学习计划 - 每日时长设置、学科权重滑块、专项练习开关与下发</p>
+      <img src="screenshots/06_learning_plan.png" alt="06_learning_plan" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/plan</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>09. 学习任务 - 按日期查看任务列表、标记完成状态</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">学习任务 - 按日期查看任务列表、标记完成状态</p>
+      <img src="screenshots/07_learning_tasks.png" alt="07_learning_tasks" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/tasks</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>10. 学情报告 - 日/周/月报切换、正确率柱状图、学科分布、薄弱知识点</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">学情报告 - 日/周/月报切换、正确率柱状图、学科分布、薄弱知识点</p>
+      <img src="screenshots/08_learning_report.png" alt="08_learning_report" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/report</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>11. 学习资源 - 按年级/学科过滤、免费/VIP标识、资源解锁弹窗</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">学习资源 - 按年级/学科过滤、免费/VIP标识、资源解锁弹窗</p>
+      <img src="screenshots/09_learning_resources.png" alt="09_learning_resources" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/resources</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>12. 时长管控 - 每日学习时长滑块、禁用时段设置、一键锁定、护眼模式</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">时长管控 - 每日学习时长滑块、禁用时段设置、一键锁定、护眼模式</p>
+      <img src="screenshots/10_parent_control.png" alt="10_parent_control" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/control</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>13. 错题本 - 按学科/掌握度筛选、批量加入复习计划、打印/PDF导出</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">错题本 - 按学科/掌握度筛选、批量加入复习计划、打印/PDF导出</p>
+      <img src="screenshots/11_wrong_questions.png" alt="11_wrong_questions" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/wrong-questions</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>14. AI答疑记录 - 查看孩子提问与AI分步启发记录</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">AI答疑记录 - 查看孩子提问与AI分步启发记录</p>
+      <img src="screenshots/12_ai_answer.png" alt="12_ai_answer" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/ai-answer</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>15. 成长激励 - 勋章墙、积分统计、激励记录列表、家长下发任务表单</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">成长激励 - 勋章墙、积分统计、激励记录列表、家长下发任务表单</p>
+      <img src="screenshots/13_achievement.png" alt="13_achievement" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/learning/achievements</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>16. 学生学习首页 - 今日AI计划卡片、推荐微课、薄弱知识点提示、每日任务进度环、快捷入口</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">学生学习首页 - 今日AI计划卡片、推荐微课、薄弱知识点提示、每日任务进度环、快捷入口</p>
+      <img src="screenshots/14_student_home.png" alt="14_student_home" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/home</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>17. 课程专区 - 全科微课列表、年级+学科筛选、视频播放器、VIP锁定</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">课程专区 - 全科微课列表、年级+学科筛选、视频播放器、VIP锁定</p>
+      <img src="screenshots/15_student_courses.png" alt="15_student_courses" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/courses</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>18. 专项练习 - 在线做题界面（选择题/填空题/判断题）、自动批改结果、错题入库</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">专项练习 - 在线做题界面（选择题/填空题/判断题）、自动批改结果、错题入库</p>
+      <img src="screenshots/16_student_exercise.png" alt="16_student_exercise" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/exercise</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>19. AI答疑中心 - 拍照上传、文字提问、AI分步对话式回答、追问续问</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">AI答疑中心 - 拍照上传、文字提问、AI分步对话式回答、追问续问</p>
+      <img src="screenshots/17_student_ai_qa.png" alt="17_student_ai_qa" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/ai-qa</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>20. 错题本（学生版）- 错题列表、AI分析薄弱点雷达图、一键推送复习微课</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">错题本（学生版）- 错题列表、AI分析薄弱点雷达图、一键推送复习微课</p>
+      <img src="screenshots/18_student_wrong_book.png" alt="18_student_wrong_book" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/wrong-book</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>21. AI口语跟读 - 单词/课文列表、录音按钮、AI评分展示、发音纠正建议</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">AI口语跟读 - 单词/课文列表、录音按钮、AI评分展示、发音纠正建议</p>
+      <img src="screenshots/19_student_oral.png" alt="19_student_oral" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/oral</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>22. AI作文批改 - 作文输入区、AI批改结果（分数+错别字+优化建议）、历史批改记录</h2>
+      <span class="badge pass">✅ 通过</span>
+    </div>
+    <div class="section-body">
+      <p class="desc">AI作文批改 - 作文输入区、AI批改结果（分数+错别字+优化建议）、历史批改记录</p>
+      <img src="screenshots/20_student_composition.png" alt="20_student_composition" loading="lazy" onclick="openLightbox(this.src)" />
+      <div class="url">📍 http://localhost:5174/student/composition</div>
+    </div>
+  </div>
+
+  <div class="api-section">
+    <h2>🔌 API 调用记录（共 120 条）</h2>
+    
+    <div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">http://localhost:8080/api/auth/dev-login</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/learning/report/1/weak-points?topN=5</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/ai/qa/history/1</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/learning/tasks/1?date=2026-07-23</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/ai/plan/today/1</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/child</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/ai/plan/today/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/learning/plan/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/learning/tasks/2?date=2026-07-23</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/learning/report/2/daily</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/learning/report/2/weak-points?topN=10</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/knowledge/mastery/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/learning/resources?childId=2&includeVip=false</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/ai/qa/history/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/ai/grading/history/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/learning/control/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/learning/wrong-questions/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/ai/qa/history/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/learning/achievements/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/ai/plan/today/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/learning/tasks/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/knowledge/mastery/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/course/recommend/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/course/list?grade=1</span><span class="st err">400</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/exercise/paper/list?grade=1</span><span class="st err">400</span></div><div class="api-item"><span class="url-part">/api/exercise/list?limit=20&grade=1</span><span class="st err">400</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/ai/qa/history/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/learning.js</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/knowledge/mastery/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/api/learning/wrong-questions/2</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/api/course/list?subject=ENGLISH&limit=20</span><span class="st err">500</span></div><div class="api-item"><span class="url-part">/src/api/auth.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/auth/me</span><span class="st ok">200</span></div><div class="api-item"><span class="url-part">/src/api/child.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/src/api/student.js</span><span class="st ok">304</span></div><div class="api-item"><span class="url-part">/api/children</span><span class="st ok">200</span></div>
+  </div>
+
+  <div class="footer">
+    学霸到家 · 自动化测试报告 · 2026/7/23<br/>
+    Powered by Playwright + Chromium · 375×812 移动端适配
+  </div>
+</div>
+<script>
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src
+  document.getElementById('lightbox').classList.add('active')
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wzoto?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD:root}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: 0
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# 学霸到家自定义配置
+wzoto:
+  jwt:
+    secret: ${JWT_SECRET:wzoto-production-jwt-secret-key-must-be-at-least-32-chars}
+    expiration-hours: 72
+  wechat:
+    app-id: ${WECHAT_APP_ID:}
+    app-secret: ${WECHAT_APP_SECRET:}
+  # AI配置（OpenAI兼容API，适配SpringAI设计规范）
+  # enabled=true启用真实AI调用，默认false使用Mock模式
+  ai:
+    enabled: ${AI_ENABLED:false}
+    base-url: ${AI_BASE_URL:https://api.openai.com}
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:gpt-3.5-turbo}
+    temperature: ${AI_TEMPERATURE:0.7}
+
+logging:
+  level:
+    com.wzoto: debug
+    com.baomidou.mybatisplus: debug

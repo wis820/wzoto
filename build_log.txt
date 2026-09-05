@@ -1,0 +1,86 @@
+﻿[INFO] Scanning for projects...
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/assertj/assertj-bom/3.24.2/assertj-bom-3.24.2.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/assertj/assertj-bom/3.24.2/assertj-bom-3.24.2.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/zipkin/brave/brave-bom/5.16.0/brave-bom-5.16.0.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/zipkin/brave/brave-bom/5.16.0/brave-bom-5.16.0.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/datastax/oss/java-driver-bom/4.17.0/java-driver-bom-4.17.0.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/datastax/oss/java-driver-bom/4.17.0/java-driver-bom-4.17.0.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/dropwizard/metrics/metrics-bom/4.2.25/metrics-bom-4.2.25.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/dropwizard/metrics/metrics-bom/4.2.25/metrics-bom-4.2.25.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/dropwizard/metrics/metrics-parent/4.2.25/metrics-parent-4.2.25.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/dropwizard/metrics/metrics-parent/4.2.25/metrics-parent-4.2.25.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/infinispan/infinispan-bom/14.0.27.Final/infinispan-bom-14.0.27.Final.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/infinispan/infinispan-bom/14.0.27.Final/infinispan-bom-14.0.27.Final.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/infinispan/infinispan-build-configuration-parent/14.0.27.Final/infinispan-build-configuration-parent-14.0.27.Final.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/infinispan/infinispan-build-configuration-parent/14.0.27.Final/infinispan-build-configuration-parent-14.0.27.Final.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/fasterxml/jackson/jackson-bom/2.15.4/jackson-bom-2.15.4.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/fasterxml/jackson/jackson-bom/2.15.4/jackson-bom-2.15.4.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/fasterxml/jackson/jackson-parent/2.15/jackson-parent-2.15.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/fasterxml/jackson/jackson-parent/2.15/jackson-parent-2.15.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/fasterxml/oss-parent/50/oss-parent-50.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/fasterxml/oss-parent/50/oss-parent-50.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/eclipse/jetty/ee10/jetty-ee10-bom/12.0.8/jetty-ee10-bom-12.0.8.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/eclipse/jetty/ee10/jetty-ee10-bom/12.0.8/jetty-ee10-bom-12.0.8.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/eclipse/jetty/jetty-bom/12.0.8/jetty-bom-12.0.8.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/eclipse/jetty/jetty-bom/12.0.8/jetty-bom-12.0.8.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/jetbrains/kotlin/kotlin-bom/1.9.23/kotlin-bom-1.9.23.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/jetbrains/kotlin/kotlin-bom/1.9.23/kotlin-bom-1.9.23.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.7.3/kotlinx-coroutines-bom-1.7.3.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.7.3/kotlinx-coroutines-bom-1.7.3.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/apache/logging/log4j/log4j-bom/2.21.1/log4j-bom-2.21.1.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/apache/logging/log4j/log4j-bom/2.21.1/log4j-bom-2.21.1.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/apache/logging/logging-parent/10.1.1/logging-parent-10.1.1.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/apache/logging/logging-parent/10.1.1/logging-parent-10.1.1.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/micrometer/micrometer-bom/1.12.5/micrometer-bom-1.12.5.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/micrometer/micrometer-bom/1.12.5/micrometer-bom-1.12.5.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/micrometer/micrometer-tracing-bom/1.2.5/micrometer-tracing-bom-1.2.5.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/micrometer/micrometer-tracing-bom/1.2.5/micrometer-tracing-bom-1.2.5.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/mockito/mockito-bom/5.7.0/mockito-bom-5.7.0.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/mockito/mockito-bom/5.7.0/mockito-bom-5.7.0.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/netty/netty-bom/4.1.109.Final/netty-bom-4.1.109.Final.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/netty/netty-bom/4.1.109.Final/netty-bom-4.1.109.Final.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/opentelemetry/opentelemetry-bom/1.31.0/opentelemetry-bom-1.31.0.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/opentelemetry/opentelemetry-bom/1.31.0/opentelemetry-bom-1.31.0.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/oracle/database/jdbc/ojdbc-bom/21.9.0.0/ojdbc-bom-21.9.0.0.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/com/oracle/database/jdbc/ojdbc-bom/21.9.0.0/ojdbc-bom-21.9.0.0.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/projectreactor/reactor-bom/2023.0.5/reactor-bom-2023.0.5.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/projectreactor/reactor-bom/2023.0.5/reactor-bom-2023.0.5.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/rest-assured/rest-assured-bom/5.3.2/rest-assured-bom-5.3.2.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/io/rest-assured/rest-assured-bom/5.3.2/rest-assured-bom-5.3.2.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/amqp/spring-amqp-bom/3.1.4/spring-amqp-bom-3.1.4.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/amqp/spring-amqp-bom/3.1.4/spring-amqp-bom-3.1.4.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/batch/spring-batch-bom/5.1.1/spring-batch-bom-5.1.1.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/batch/spring-batch-bom/5.1.1/spring-batch-bom-5.1.1.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/data/spring-data-bom/2023.1.5/spring-data-bom-2023.1.5.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/data/spring-data-bom/2023.1.5/spring-data-bom-2023.1.5.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/spring-framework-bom/6.1.6/spring-framework-bom-6.1.6.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/spring-framework-bom/6.1.6/spring-framework-bom-6.1.6.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/integration/spring-integration-bom/6.2.4/spring-integration-bom-6.2.4.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/integration/spring-integration-bom/6.2.4/spring-integration-bom-6.2.4.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/pulsar/spring-pulsar-bom/1.0.5/spring-pulsar-bom-1.0.5.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/pulsar/spring-pulsar-bom/1.0.5/spring-pulsar-bom-1.0.5.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/security/spring-security-bom/6.2.4/spring-security-bom-6.2.4.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/security/spring-security-bom/6.2.4/spring-security-bom-6.2.4.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/session/spring-session-bom/3.2.2/spring-session-bom-3.2.2.pom
+Progress (1): 1.9/2.9 kB
+Progress (1): 2.9 kB    
+                    
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/session/spring-session-bom/3.2.2/spring-session-bom-3.2.2.pom (2.9 kB at 6.0 kB/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/ws/spring-ws-bom/4.0.10/spring-ws-bom-4.0.10.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/ws/spring-ws-bom/4.0.10/spring-ws-bom-4.0.10.pom (0 B at 0 B/s)
+Downloading from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/testcontainers/testcontainers-bom/1.19.7/testcontainers-bom-1.19.7.pom
+Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/org/testcontainers/testcontainers-bom/1.19.7/testcontainers-bom-1.19.7.pom (0 B at 0 B/s)
+[ERROR] [ERROR] Some problems were encountered while processing the POMs:
+[ERROR] Non-resolvable import POM: Failure to find org.springframework.ai:spring-ai-bom:pom:0.8.1 in http://maven.aliyun.com/nexus/content/groups/public/ was cached in the local repository, resolution will not be reattempted until the update interval of alimaven has elapsed or updates are forced @ line 43, column 25
+ @ 
+[ERROR] The build could not read 1 project -> [Help 1]
+[ERROR]   
+[ERROR]   The project com.wzoto:wzoto-backend:1.0.0-SNAPSHOT (f:\wanglianyida\wzoto\wzoto-backend\pom.xml) has 1 error
+[ERROR]     Non-resolvable import POM: Failure to find org.springframework.ai:spring-ai-bom:pom:0.8.1 in http://maven.aliyun.com/nexus/content/groups/public/ was cached in the local repository, resolution will not be reattempted until the update interval of alimaven has elapsed or updates are forced @ line 43, column 25 -> [Help 2]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/ProjectBuildingException
+[ERROR] [Help 2] http://cwiki.apache.org/confluence/display/MAVEN/UnresolvableModelException

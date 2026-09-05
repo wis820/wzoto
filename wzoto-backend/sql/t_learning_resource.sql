@@ -1,0 +1,35 @@
+-- =============================================
+-- 学霸到家 - 学习资源表 DDL
+-- =============================================
+CREATE TABLE IF NOT EXISTS t_learning_resource (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    grade VARCHAR(16) NOT NULL COMMENT '年级：GRADE_1~GRADE_6',
+    subject VARCHAR(32) NOT NULL COMMENT '学科：MATH/CHINESE/ENGLISH',
+    textbook_version VARCHAR(32) DEFAULT NULL COMMENT '教材版本',
+    resource_type VARCHAR(32) NOT NULL COMMENT '资源类型：VIDEO/EXERCISE/PDF/QUESTION',
+    title VARCHAR(128) NOT NULL COMMENT '资源标题',
+    cover_url VARCHAR(512) DEFAULT NULL COMMENT '封面图URL',
+    content_url VARCHAR(512) DEFAULT NULL COMMENT '资源内容URL',
+    duration_seconds INT DEFAULT NULL COMMENT '视频时长（秒）',
+    knowledge_point VARCHAR(128) DEFAULT NULL COMMENT '知识点',
+    tags VARCHAR(256) DEFAULT NULL COMMENT '标签JSON',
+    source_type VARCHAR(32) DEFAULT NULL COMMENT '视频源类型：MP4/BILIBILI/SMARTEDU',
+    subtitle_url VARCHAR(512) DEFAULT NULL COMMENT '字幕文件URL',
+    quality_levels VARCHAR(512) DEFAULT NULL COMMENT '画质等级JSON',
+    knowledge_markers VARCHAR(1024) DEFAULT NULL COMMENT '知识点标记JSON',
+    status VARCHAR(16) DEFAULT 'PUBLISHED' COMMENT '资源状态',
+    description VARCHAR(512) DEFAULT NULL COMMENT '资源描述',
+    publish_at DATETIME DEFAULT NULL COMMENT '发布时间',
+    unpublish_at DATETIME DEFAULT NULL COMMENT '下架时间',
+    operator_id BIGINT DEFAULT NULL COMMENT '操作员 ID',
+    vip_only TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否仅会员可见：0否1是',
+    sort_order INT NOT NULL DEFAULT 0 COMMENT '排序号',
+    deleted TINYINT(1) NOT NULL DEFAULT 0,
+    created_at DATETIME DEFAULT NULL,
+    updated_at DATETIME DEFAULT NULL,
+    INDEX idx_grade_subject (grade, subject),
+    INDEX idx_textbook_version (textbook_version),
+    INDEX idx_resource_type (resource_type),
+    INDEX idx_vip_only (vip_only),
+    INDEX idx_knowledge_point (knowledge_point)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学习资源表';

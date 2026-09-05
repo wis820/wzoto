@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>学霸到家</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333;background:#F5F6FA;line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+input,textarea,select,button{font-family:inherit;outline:none;border:none;background:none}
+
+:root{
+  --primary:#4A7BFF;
+  --primary-light:#EDF2FF;
+  --primary-dark:#3A65D9;
+  --accent:#FF8C00;
+  --accent-light:#FFF5E6;
+  --green:#52C41A;
+  --green-light:#E8F5E9;
+  --red:#F5222D;
+  --red-light:#FFF1F0;
+  --gold:#D4A017;
+  --gold-light:#FFF8E1;
+  --orange:#FF8C00;
+  --yellow:#FAAD14;
+  --text-1:#1A1A1A;
+  --text-2:#595959;
+  --text-3:#8C8C8C;
+  --text-4:#BFBFBF;
+  --bg-1:#FFFFFF;
+  --bg-2:#F5F6FA;
+  --bg-3:#FAFAFA;
+  --border:#F0F0F0;
+  --shadow:0 1px 8px rgba(0,0,0,0.06);
+  --r:12px;
+  --r-sm:8px;
+  --r-lg:16px;
+}
+
+/* ===== APP SHELL ===== */
+#app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg-2);position:relative;overflow-x:hidden}
+
+/* ===== STATUS BAR ===== */
+.status-bar{height:44px;background:var(--primary);display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:#fff;font-size:12px;font-weight:500}
+.status-bar .time{font-weight:600;font-size:14px}
+.status-bar .icons{display:flex;gap:5px;align-items:center;font-size:12px}
+
+/* ===== NAV BAR ===== */
+.nav-bar{height:44px;background:var(--primary);display:flex;align-items:center;padding:0 16px;position:sticky;top:0;z-index:100}
+.nav-bar .back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;cursor:pointer}
+.nav-bar .title{flex:1;text-align:center;color:#fff;font-size:17px;font-weight:600;letter-spacing:0.5px}
+.nav-bar .right{width:32px;display:flex;align-items:center;justify-content:flex-end;color:rgba(255,255,255,0.85);font-size:14px;cursor:pointer;gap:8px}
+
+/* ===== TAB BAR ===== */
+.tab-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:50px;background:#fff;display:flex;align-items:center;border-top:0.5px solid #E8E8E8;z-index:200;padding-bottom:env(safe-area-inset-bottom)}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;cursor:pointer;color:var(--text-3);transition:color .2s;gap:1px}
+.tab-item .t-icon{font-size:20px;line-height:1}
+.tab-item .t-label{font-size:10px}
+.tab-item.active{color:var(--primary)}
+.tab-item .badge{position:absolute;top:2px;right:calc(50% - 20px);background:var(--red);color:#fff;font-size:9px;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.tab-post-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;cursor:pointer}
+.tab-post{width:40px;height:40px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;box-shadow:0 2px 8px rgba(255,140,0,0.3);margin-top:-10px}
+.tab-post-wrap .t-label{font-size:10px;color:var(--text-3);margin-top:1px}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:calc(100vh - 94px);padding-bottom:56px;animation:fadeUp .3s ease}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SEARCH ===== */
+.search-wrap{background:var(--primary);padding:0 14px 10px}
+.search-box{height:34px;background:rgba(255,255,255,0.95);border-radius:17px;display:flex;align-items:center;padding:0 12px;gap:6px;cursor:pointer}
+.search-box .s-icon{color:var(--text-4);font-size:13px}
+.search-box .s-text{color:var(--text-3);font-size:13px;flex:1}
+.search-wrap .s-bell{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.9);font-size:16px;cursor:pointer;position:relative}
+.search-wrap .s-bell .dot{position:absolute;top:4px;right:4px;width:6px;height:6px;background:#fff;border-radius:50%}
+
+/* ===== FILTER ===== */
+.filter-row{background:#fff;display:flex;height:40px;border-bottom:0.5px solid var(--border)}
+.filter-cell{flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-2);cursor:pointer;gap:2px;position:relative}
+.filter-cell::after{content:'';position:absolute;right:0;top:25%;height:50%;width:0.5px;background:var(--border)}
+.filter-cell:last-child::after{display:none}
+.filter-cell .arr{font-size:8px;color:var(--text-4);transition:transform .2s}
+.filter-cell.active{color:var(--primary);font-weight:600}
+.filter-cell.active .arr{transform:rotate(180deg);color:var(--primary)}
+
+/* ===== IDENTITY SWITCH ===== */
+.identity-switch{background:#fff;margin:8px 12px;border-radius:var(--r);display:flex;padding:3px;box-shadow:var(--shadow)}
+.id-tab{flex:1;text-align:center;padding:8px 0;font-size:13px;font-weight:500;color:var(--text-3);cursor:pointer;border-radius:var(--r-sm);transition:all .2s}
+.id-tab.active{background:var(--primary);color:#fff;font-weight:600}
+
+/* ===== BANNER ===== */
+.vip-banner{margin:8px 12px;padding:10px 14px;background:linear-gradient(135deg,#FFF8E1,#FFECB3);border-radius:var(--r);display:flex;align-items:center;cursor:pointer;gap:10px}
+.vip-banner .vb-icon{font-size:20px}
+.vip-banner .vb-info{flex:1}
+.vip-banner .vb-t1{font-size:12px;font-weight:600;color:#8D6E00}
+.vip-banner .vb-t2{font-size:10px;color:var(--gold);margin-top:1px}
+.vip-banner .vb-btn{background:var(--accent);color:#fff;font-size:11px;padding:4px 12px;border-radius:11px;font-weight:600}
+
+/* ===== ANNOUNCE ===== */
+.announce{height:32px;background:var(--gold-light);display:flex;align-items:center;padding:0 12px;gap:6px;overflow:hidden;font-size:11px;color:var(--gold)}
+.announce .a-icon{flex-shrink:0}
+.announce .a-text{white-space:nowrap;animation:scroll 15s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+/* ===== CARD LIST ===== */
+.card-list{padding:6px 12px}
+.card-item{background:#fff;border-radius:var(--r);margin-bottom:8px;box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .12s}
+.card-item:active{transform:scale(0.99)}
+
+/* teacher card - left img right text */
+.tc{display:flex;padding:12px;gap:10px}
+.tc-left{width:52px;height:52px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;overflow:hidden}
+.tc-left img{width:100%;height:100%;object-fit:cover}
+.tc-right{flex:1;min-width:0}
+.tc-r1{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tc-name{font-size:15px;font-weight:600;color:var(--text-1)}
+.tc-tag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}
+.tc-tag.t985{background:var(--accent-light);color:var(--accent)}
+.tc-tag.t211{background:var(--accent-light);color:var(--accent)}
+.tc-tag.tvip{background:var(--gold-light);color:var(--gold)}
+.tc-tag.ttop{background:var(--red-light);color:var(--red)}
+.tc-school{font-size:11px;color:var(--text-3);margin-top:1px}
+.tc-r2{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.tc-sub{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--primary-light);color:var(--primary)}
+.tc-r3{display:flex;align-items:center;gap:10px;margin-top:6px}
+.tc-price{font-size:16px;font-weight:700;color:var(--accent)}
+.tc-price em{font-size:11px;font-weight:400;font-style:normal;color:var(--text-3)}
+.tc-star{font-size:11px;color:var(--yellow);display:flex;align-items:center;gap:2px}
+.tc-dist{font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:2px}
+.tc-r4{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;align-items:center}
+.tc-slot{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--green-light);color:var(--green);font-weight:500}
+.tc-slot-lock{font-size:10px;padding:2px 6px;border-radius:4px;background:#f5f5f5;color:var(--text-4);cursor:pointer}
+.tc-fav{position:absolute;right:12px;top:12px;font-size:16px;color:#E0E0E0;cursor:pointer}
+.tc-fav.on{color:var(--red)}
+
+/* ===== DETAIL ===== */
+.det-header{background:linear-gradient(180deg,var(--primary),var(--primary-dark));padding:20px 16px 28px;text-align:center;color:#fff;position:relative}
+.det-avatar{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.15);border:3px solid rgba(255,255,255,0.4);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden}
+.det-name{font-size:20px;font-weight:700}
+.det-school{font-size:12px;opacity:.85;margin-top:2px}
+.det-badges{display:flex;gap:5px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+.det-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,0.15)}
+.det-badge.b985{background:rgba(255,140,0,0.25)}
+.det-verify{margin-top:6px;font-size:11px;opacity:.9;display:flex;align-items:center;justify-content:center;gap:3px}
+
+.det-sec{background:#fff;margin:8px 12px;border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.det-sec-title{font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.det-sec-title .ico{font-size:15px}
+.det-sec-title .lock-hint{font-size:11px;color:var(--text-3);font-weight:400;margin-left:auto}
+
+/* pricing */
+.p-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--border)}
+.p-row:last-child{border:none}
+.p-level{font-size:13px;color:var(--text-2)}
+.p-val{font-size:14px;font-weight:600;color:var(--accent)}
+
+/* ===== WEEKLY SCHEDULE ===== */
+.week-sched{width:100%}
+.ws-head{display:grid;grid-template-columns:52px repeat(7,1fr);gap:1px;text-align:center}
+.ws-head div{padding:6px 0;font-size:10px;font-weight:600;color:var(--text-3);background:var(--bg-3)}
+.ws-head div:first-child{background:transparent}
+.ws-body{display:grid;grid-template-columns:52px repeat(7,1fr);gap:1px}
+.ws-label{font-size:10px;color:var(--text-3);display:flex;align-items:center;justify-content:center;background:var(--bg-3);text-align:center;line-height:1.2;padding:4px 2px}
+.ws-cell{height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border-radius:4px;transition:all .15s}
+.ws-cell.ok{background:var(--green-light);color:var(--green)}
+.ws-cell.no{background:#F8F8F8;color:#E0E0E0}
+.ws-cell.lk{background:#F8F8F8;color:#D0D0D0;position:relative}
+
+.ws-legend{display:flex;gap:14px;justify-content:center;margin-top:8px;font-size:10px;color:var(--text-3)}
+.ws-legend span{display:flex;align-items:center;gap:3px}
+.leg-box{width:10px;height:10px;border-radius:3px}
+.leg-box.g{background:var(--green-light)}
+.leg-box.gr{background:#F8F8F8}
+
+.ws-lock-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.88);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--r);z-index:5;gap:6px}
+.ws-lock-overlay .lock-icon{font-size:28px}
+.ws-lock-overlay .lock-text{font-size:12px;color:var(--text-2);font-weight:500}
+.ws-lock-overlay .lock-sub{font-size:10px;color:var(--text-3)}
+.ws-lock-btn{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:6px 18px;border-radius:14px;cursor:pointer}
+
+/* reviews */
+.rev{padding:8px 0;border-bottom:0.5px solid var(--border)}
+.rev:last-child{border:none}
+.rev-top{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.rev-ava{width:24px;height:24px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary)}
+.rev-name{font-size:12px;font-weight:500}
+.rev-stars{color:var(--yellow);font-size:10px}
+.rev-date{font-size:10px;color:var(--text-3);margin-left:auto}
+.rev-text{font-size:12px;color:var(--text-2);line-height:1.6}
+.rev-tags{display:flex;gap:3px;margin-top:3px}
+.rev-tag{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--primary-light);color:var(--primary)}
+.rev-lock{text-align:center;padding:10px;font-size:11px;color:var(--text-3)}
+.rev-lock a{color:var(--accent);font-weight:600;cursor:pointer}
+
+/* awards */
+.awd{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:12px;color:var(--text-2)}
+.awd .trophy{font-size:13px}
+
+/* detail bottom */
+.det-bottom{position:fixed;bottom:50px;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;display:flex;align-items:center;padding:6px 12px;gap:6px;border-top:0.5px solid var(--border);z-index:150}
+.db-act{display:flex;flex-direction:column;align-items:center;padding:2px 8px;font-size:9px;color:var(--text-3);cursor:pointer;gap:1px}
+.db-act .db-ico{font-size:17px}
+.db-act.on{color:var(--red)}
+.db-btn{flex:1;height:36px;border-radius:18px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.db-btn.blue{background:var(--primary);color:#fff}
+.db-btn.orange{background:var(--accent);color:#fff}
+.db-btn.gray{background:#F0F0F0;color:#BBB;font-weight:400;font-size:11px}
+
+/* ===== FORM ===== */
+.form-wrap{padding:10px 12px}
+.fg{background:#fff;border-radius:var(--r);padding:0 14px;margin-bottom:8px;box-shadow:var(--shadow)}
+.fi{padding:12px 0;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
+.fi:last-child{border:none}
+.fi-label{width:64px;font-size:13px;color:var(--text-1);flex-shrink:0}
+.fi-label .req{color:var(--red)}
+.fi-input{flex:1;font-size:13px;color:var(--text-2);text-align:right}
+.fi-arrow{color:var(--text-4);font-size:12px}
+.fi-tags{display:flex;flex-wrap:wrap;gap:5px;flex:1}
+.fi-tag{font-size:11px;padding:4px 10px;border-radius:12px;background:var(--bg-3);color:var(--text-2);cursor:pointer;transition:all .15s}
+.fi-tag.on{background:var(--primary-light);color:var(--primary);font-weight:500}
+.fi-tag-pr{font-size:11px;padding:5px 12px;border-radius:12px;background:var(--bg-3);color:var(--text-2);cursor:pointer;transition:all .15s}
+.fi-tag-pr.on{background:var(--accent-light);color:var(--accent);font-weight:600}
+.fi-textarea{width:100%;min-height:70px;font-size:13px;color:var(--text-2);resize:none;line-height:1.6}
+.fi-textarea::placeholder{color:var(--text-4)}
+.fi-counter{font-size:10px;color:var(--text-3);text-align:right;margin-top:2px}
+.form-btn{margin:12px 0 20px;padding:0 12px}
+.form-btn button{width:100%;height:44px;background:var(--accent);color:#fff;font-size:15px;font-weight:600;border-radius:22px;cursor:pointer}
+.form-btn button:active{opacity:.85}
+.form-notice{text-align:center;font-size:10px;color:var(--text-3);margin-top:6px}
+
+/* ===== VIP PAGE ===== */
+.vip-banner-top{background:linear-gradient(135deg,var(--primary),#6BA3FF);padding:24px 20px;text-align:center;color:#fff}
+.vip-banner-top .vb-icon{font-size:36px;margin-bottom:6px}
+.vip-banner-top .vb-title{font-size:18px;font-weight:700}
+.vip-banner-top .vb-sub{font-size:12px;opacity:.85;margin-top:4px;line-height:1.5}
+
+.vp-plans{display:flex;gap:8px;padding:14px 12px 6px}
+.vp-card{flex:1;background:#fff;border-radius:var(--r);padding:14px 10px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s;position:relative}
+.vp-card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.vp-card .vp-badge{position:absolute;top:-1px;right:-1px;background:var(--accent);color:#fff;font-size:9px;padding:2px 7px;border-radius:0 10px 0 8px;font-weight:600}
+.vp-card .vp-name{font-size:15px;font-weight:600;color:var(--text-1)}
+.vp-card .vp-price{font-size:28px;font-weight:700;color:var(--accent);margin:6px 0 0}
+.vp-card .vp-price em{font-size:11px;font-weight:400;font-style:normal;color:var(--text-3)}
+.vp-card .vp-save{font-size:11px;color:var(--red);font-weight:600;margin-top:2px}
+
+.vp-priv{background:#fff;margin:8px 12px;border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.vp-priv-title{font-size:14px;font-weight:600;margin-bottom:10px}
+.vp-item{display:flex;align-items:flex-start;gap:6px;padding:5px 0;font-size:12px;color:var(--text-2)}
+.vp-item .vp-ico{font-size:14px;flex-shrink:0}
+
+.vp-cmp{background:#fff;margin:8px 12px;border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.vp-cmp-title{font-size:14px;font-weight:600;margin-bottom:8px}
+.vp-tbl{width:100%;font-size:11px;border-collapse:collapse}
+.vp-tbl th{text-align:center;padding:6px 3px;background:var(--primary-light);color:var(--primary);font-weight:600;border:0.5px solid #dde5ff}
+.vp-tbl th:first-child{text-align:left;background:var(--bg-3);color:var(--text-2)}
+.vp-tbl td{padding:6px 3px;text-align:center;border:0.5px solid var(--border)}
+.vp-tbl td:first-child{text-align:left;color:var(--text-2)}
+.cl{color:var(--text-4)}
+.co{color:var(--green);font-weight:600}
+
+.vp-bottom{position:sticky;bottom:50px;background:#fff;padding:10px 16px;border-top:0.5px solid var(--border);z-index:100}
+.vp-agree{font-size:10px;color:var(--text-3);margin-bottom:6px;display:flex;align-items:center;gap:3px}
+.vp-agree a{color:var(--primary)}
+.vp-chk{width:12px;height:12px;border-radius:2px;border:1.5px solid var(--text-4);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#fff;cursor:pointer;flex-shrink:0}
+.vp-chk.on{background:var(--primary);border-color:var(--primary)}
+.vp-buy{width:100%;height:44px;background:var(--accent);color:#fff;font-size:15px;font-weight:600;border-radius:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:3px}
+.vp-buy:active{opacity:.85}
+.vp-auto{text-align:center;font-size:10px;color:var(--text-3);margin-top:4px}
+
+/* ===== MY PAGE ===== */
+.my-hd{background:linear-gradient(135deg,var(--primary),var(--primary-dark));padding:20px 16px 28px;color:#fff;display:flex;align-items:center;gap:12px}
+.my-ava{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);border:2.5px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;overflow:hidden}
+.my-info{flex:1}
+.my-name{font-size:17px;font-weight:700}
+.my-role{font-size:11px;opacity:.85;margin-top:2px;display:flex;align-items:center;gap:4px}
+.my-role .r-tag{background:rgba(255,255,255,0.2);padding:1px 7px;border-radius:7px;font-size:10px}
+.my-vip{margin:-14px 12px 8px;background:linear-gradient(135deg,#2A2A2A,#1A1A1A);border-radius:var(--r);padding:12px 14px;color:#fff;display:flex;align-items:center;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.15)}
+.my-vip::before{content:'';position:absolute;top:-15px;right:-15px;width:60px;height:60px;background:rgba(255,215,0,0.08);border-radius:50%}
+.my-vip .mv-ico{font-size:24px;margin-right:10px}
+.my-vip .mv-info{flex:1}
+.my-vip .mv-st{font-size:13px;font-weight:600}
+.my-vip .mv-exp{font-size:10px;opacity:.55;margin-top:1px}
+.my-vip .mv-btn{background:linear-gradient(135deg,#FFD700,#FFC107);color:#333;font-size:11px;font-weight:600;padding:5px 14px;border-radius:12px}
+.my-vip.not .mv-st{color:var(--gold)}
+
+.my-vf{margin:0 12px 8px;background:#fff;border-radius:var(--r);padding:10px 14px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between}
+.my-vf-left{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-1)}
+.my-vf-ico{font-size:16px}
+.my-vf-ico.ok{color:var(--green)}
+.my-vf-arrow{color:var(--text-4);font-size:11px}
+
+.my-sec{margin:0 12px 8px;background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.my-row{display:flex;align-items:center;padding:12px 14px;cursor:pointer;transition:background .12s}
+.my-row:active{background:#FAFAFA}
+.my-row+.my-row{border-top:0.5px solid var(--border)}
+.my-row-ico{width:24px;font-size:16px;text-align:center;margin-right:8px}
+.my-row-txt{flex:1;font-size:13px;color:var(--text-1)}
+.my-row-badge{background:var(--red);color:#fff;font-size:9px;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px;margin-right:4px}
+.my-row-extra{font-size:11px;color:var(--text-3);margin-right:4px}
+.my-row-arr{color:var(--text-4);font-size:11px}
+
+/* ===== STUDENT HOME ===== */
+.stu-demand{padding:12px}
+.demand-card{background:#fff;border-radius:var(--r);padding:12px;margin-bottom:8px;box-shadow:var(--shadow)}
+.dc-top{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.dc-tag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}
+.dc-tag.subj{background:var(--primary-light);color:var(--primary)}
+.dc-tag.grade{background:var(--green-light);color:var(--green)}
+.dc-tag.urgent{background:var(--red-light);color:var(--red)}
+.dc-title{font-size:14px;font-weight:600;color:var(--text-1);flex:1}
+.dc-info{font-size:12px;color:var(--text-2);line-height:1.8}
+.dc-info em{font-style:normal;color:var(--accent);font-weight:600}
+.dc-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.dc-dist{font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:3px}
+.dc-btn{font-size:12px;padding:5px 16px;border-radius:13px;font-weight:600;cursor:pointer}
+.dc-btn.free{background:var(--primary);color:#fff}
+.dc-btn.sent{background:var(--bg-3);color:var(--text-3)}
+.dc-btn.lock{background:var(--bg-3);color:var(--text-4)}
+
+/* ===== MODAL ===== */
+.m-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:500;display:none;align-items:center;justify-content:center}
+.m-overlay.show{display:flex}
+.m-box{width:82%;max-width:340px;background:#fff;border-radius:var(--r-lg);padding:22px 18px 20px;animation:popUp .2s ease}
+@keyframes popUp{from{transform:scale(0.92);opacity:0}to{transform:scale(1);opacity:1}}
+.m-title{font-size:16px;font-weight:600;text-align:center;color:var(--text-1);margin-bottom:3px}
+.m-sub{font-size:12px;text-align:center;color:var(--text-3);margin-bottom:14px}
+.m-features{margin-bottom:14px}
+.m-feat{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-2);padding:3px 0}
+.m-feat .ck{color:var(--green);font-size:13px}
+.m-price{text-align:center;font-size:12px;color:var(--accent);font-weight:600;margin-bottom:12px}
+.m-btns{display:flex;gap:8px}
+.m-cancel{flex:1;height:38px;border-radius:19px;border:1px solid var(--border);font-size:13px;color:var(--text-3);cursor:pointer;background:#fff}
+.m-confirm{flex:1;height:38px;border-radius:19px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+
+/* ai double choice */
+.ai-opt{border:1.5px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:border .15s}
+.ai-opt:hover{border-color:#ddd}
+.ai-opt-title{font-size:13px;font-weight:600;color:var(--text-1)}
+.ai-opt-desc{font-size:11px;color:var(--text-3);margin-top:1px}
+.ai-opt-price{font-size:18px;font-weight:700;color:var(--accent);margin-top:4px}
+.ai-opt-price em{font-size:11px;font-weight:400;font-style:normal;color:var(--text-3)}
+.ai-opt.vip{background:var(--gold-light);border-color:rgba(212,160,23,0.3)}
+.ai-opt.vip .ai-opt-price{color:var(--gold)}
+
+/* ===== EMPTY ===== */
+.empty{text-align:center;padding:50px 20px}
+.empty-ico{font-size:42px;margin-bottom:10px;opacity:.4}
+.empty-txt{font-size:13px;color:var(--text-3);margin-bottom:14px}
+.empty-btn{display:inline-block;padding:7px 22px;background:var(--primary);color:#fff;border-radius:17px;font-size:13px;cursor:pointer}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.72);color:#fff;padding:8px 20px;border-radius:6px;font-size:13px;z-index:999;display:none;text-align:center;max-width:220px}
+.toast.show{display:block;animation:tIn .15s ease}
+@keyframes tIn{from{opacity:0;transform:translate(-50%,-50%) scale(0.92)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+
+::-webkit-scrollbar{width:0;height:0}
+@media(min-width:431px){#app{box-shadow:0 0 30px rgba(0,0,0,0.06);border-left:1px solid #eee;border-right:1px solid #eee}}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- ===== STATUS BAR ===== -->
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <span class="icons">📶 📡 🔋</span>
+  </div>
+
+  <!-- ===== PAGE: HOME ===== -->
+  <div id="pg-home" class="page active">
+    <div class="nav-bar">
+      <div class="title">学霸到家</div>
+      <div class="right" onclick="showToast('客服热线：400-888-0000')">📞</div>
+    </div>
+    <div class="search-wrap" style="display:flex;gap:8px;align-items:center">
+      <div class="search-box" style="flex:1" onclick="showToast('搜索页')">
+        <span class="s-icon">🔍</span><span class="s-text">搜学科、年级、学校名</span>
+      </div>
+      <div class="s-bell" onclick="switchPage('pg-msg')">
+        🔔<span class="dot"></span>
+      </div>
+    </div>
+    <!-- identity switch -->
+    <div class="identity-switch">
+      <div class="id-tab active" onclick="switchIdentity('parent',this)">👨‍👩‍👧 家长端</div>
+      <div class="id-tab" onclick="switchIdentity('student',this)">🎓 大学生端</div>
+    </div>
+    <!-- parent content -->
+    <div id="parent-view">
+      <div class="filter-row">
+        <div class="filter-cell" onclick="toggleFilter(this)">学科 <span class="arr">▾</span></div>
+        <div class="filter-cell" onclick="toggleFilter(this)">年级 <span class="arr">▾</span></div>
+        <div class="filter-cell" onclick="toggleFilter(this)">距离 <span class="arr">▾</span></div>
+        <div class="filter-cell" onclick="toggleFilter(this)">单价 <span class="arr">▾</span></div>
+        <div class="filter-cell" onclick="toggleFilter(this)">院校 <span class="arr">▾</span></div>
+      </div>
+      <div class="announce"><span class="a-icon">📢</span><span class="a-text">学霸到家严打虚假师资，所有大学生均通过学生证+实名双审，保障信息100%真实！</span></div>
+      <div class="vip-banner" onclick="switchPage('pg-vip')">
+        <span class="vb-icon">💎</span>
+        <div class="vb-info"><div class="vb-t1">开通会员，解锁全量师资+AI学情分析</div><div class="vb-t2">月卡¥39 · 年卡¥299</div></div>
+        <span class="vb-btn">开通</span>
+      </div>
+      <div class="card-list" id="parentCards"></div>
+    </div>
+    <!-- student content -->
+    <div id="student-view" style="display:none">
+      <div class="filter-row">
+        <div class="filter-cell" onclick="toggleFilter(this)">科目 <span class="arr">▾</span></div>
+        <div class="filter-cell" onclick="toggleFilter(this)">距离 <span class="arr">▾</span></div>
+        <div class="filter-cell" onclick="toggleFilter(this)">预算 <span class="arr">▾</span></div>
+      </div>
+      <div class="announce"><span class="a-icon">📢</span><span class="a-text">完善家教档案，让更多家长看到你！每日免费投递5条招聘需求。</span></div>
+      <div class="vip-banner" onclick="switchPage('pg-vip')">
+        <span class="vb-icon">💎</span>
+        <div class="vb-info"><div class="vb-t1">开通教员会员，无限投递+优先展示</div><div class="vb-t2">月卡¥29</div></div>
+        <span class="vb-btn">开通</span>
+      </div>
+      <div class="stu-demand" id="stuDemands"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: DETAIL ===== -->
+  <div id="pg-detail" class="page">
+    <div class="nav-bar">
+      <div class="back" onclick="switchPage('pg-home')">‹</div>
+      <div class="title">老师详情</div>
+      <div class="right"><span onclick="showToast('已分享')">⋯</span></div>
+    </div>
+    <div id="detBody"></div>
+    <div class="det-bottom" id="detBot"></div>
+  </div>
+
+  <!-- ===== PAGE: POST ===== -->
+  <div id="pg-post" class="page">
+    <div class="nav-bar">
+      <div class="back" onclick="switchPage('pg-home')">‹</div>
+      <div class="title">发布家教招聘</div>
+    </div>
+    <div class="form-wrap">
+      <div class="fg">
+        <div class="fi"><div class="fi-label">辅导年级<span class="req">*</span></div><div class="fi-input" style="color:var(--text-3)" onclick="showToast('选择年级')">请选择辅导年级</div><span class="fi-arrow">›</span></div>
+        <div class="fi" style="flex-wrap:wrap"><div class="fi-label">辅导科目<span class="req">*</span></div><div class="fi-tags" id="fSubjects"></div></div>
+        <div class="fi" style="flex-wrap:wrap"><div class="fi-label">辅导类型<span class="req">*</span></div><div class="fi-tags" id="fTypes"></div></div>
+      </div>
+      <div class="fg">
+        <div class="fi"><div class="fi-label">授课地址<span class="req">*</span></div><div class="fi-input">📍 杭州市西湖区文三路</div><span class="fi-arrow">›</span></div>
+      </div>
+      <div class="fg">
+        <div class="fi" style="flex-wrap:wrap"><div class="fi-label">期望预算<span class="req">*</span></div><div class="fi-tags" id="fBudget"></div></div>
+        <div class="fi" style="flex-wrap:wrap"><div class="fi-label">上课频次<span class="req">*</span></div><div class="fi-tags" id="fFreq"></div></div>
+      </div>
+      <div class="fg">
+        <div style="padding:12px 0">
+          <div class="fi-label" style="margin-bottom:6px">需求备注</div>
+          <textarea class="fi-textarea" placeholder="如：孩子初二数学薄弱，需要耐心细致的老师" maxlength="500" oninput="document.getElementById('cc').textContent=this.value.length"></textarea>
+          <div class="fi-counter"><span id="cc">0</span>/500</div>
+        </div>
+      </div>
+      <div class="form-btn">
+        <button onclick="showToast('✅ 发布成功！');setTimeout(()=>switchPage('pg-home'),1000)">发布招聘</button>
+        <div class="form-notice">⚠️ 课时费用由您与老师线下自行结算，平台不收取任何费用</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: VIP ===== -->
+  <div id="pg-vip" class="page">
+    <div class="nav-bar">
+      <div class="back" onclick="switchPage('pg-home')">‹</div>
+      <div class="title">开通会员</div>
+    </div>
+    <div id="vipBody"></div>
+  </div>
+
+  <!-- ===== PAGE: MY ===== -->
+  <div id="pg-my" class="page">
+    <div class="nav-bar">
+      <div class="title">个人中心</div>
+    </div>
+    <div id="myBody"></div>
+  </div>
+
+  <!-- ===== PAGE: MSG ===== -->
+  <div id="pg-msg" class="page">
+    <div class="nav-bar">
+      <div class="back" onclick="switchPage('pg-home')">‹</div>
+      <div class="title">消息中心</div>
+    </div>
+    <div class="empty"><div class="empty-ico">💬</div><div class="empty-txt">暂无新消息</div><div class="empty-btn" onclick="switchPage('pg-home')">返回首页</div></div>
+  </div>
+
+  <!-- ===== TAB BAR ===== -->
+  <div class="tab-bar">
+    <div class="tab-item active" onclick="switchTab(this,'pg-home')"><span class="t-icon">🏠</span><span class="t-label">首页</span></div>
+    <div class="tab-item" onclick="switchTab(this,'pg-msg')" style="position:relative"><span class="t-icon">💬</span><span class="t-label">消息</span><span class="badge">2</span></div>
+    <div class="tab-post-wrap" onclick="switchTab(this,'pg-post')"><div class="tab-post">+</div><span class="t-label">发布</span></div>
+    <div class="tab-item" onclick="switchTab(this,'pg-vip')"><span class="t-icon">💎</span><span class="t-label">会员</span></div>
+    <div class="tab-item" onclick="switchTab(this,'pg-my')"><span class="t-icon">👤</span><span class="t-label">我的</span></div>
+  </div>
+
+  <!-- ===== MODALS ===== -->
+  <div class="m-overlay" id="vipModal">
+    <div class="m-box">
+      <div class="m-title" id="mTitle">🔒 解锁完整课表</div>
+      <div class="m-sub" id="mSub">开通会员查看老师每周详细空闲时段</div>
+      <div class="m-features" id="mFeats"></div>
+      <div class="m-price" id="mPrice">💎 月卡 ¥39 | 年卡 ¥299</div>
+      <div class="m-btns">
+        <button class="m-cancel" onclick="closeModal('vipModal')">取消</button>
+        <button class="m-confirm" onclick="closeModal('vipModal');switchPage('pg-vip')">去开通会员</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-overlay" id="aiModal">
+    <div class="m-box">
+      <div class="m-title">🤖 AI学情诊断报告</div>
+      <div class="m-sub">填写孩子薄弱知识点，AI自动生成辅导规划</div>
+      <div class="ai-opt" onclick="closeModal('aiModal');showToast('支付¥19.9，生成报告')">
+        <div class="ai-opt-title">单次购买</div>
+        <div class="ai-opt-desc">购买一次，生成完整AI学情诊断报告</div>
+        <div class="ai-opt-price">¥19.9 <em>/ 次</em></div>
+      </div>
+      <div class="ai-opt vip" onclick="closeModal('aiModal');switchPage('pg-vip')">
+        <div class="ai-opt-title">💎 开通会员</div>
+        <div class="ai-opt-desc">月卡¥39 | 年卡¥299 · 每月2份免费+全部会员权益</div>
+        <div class="ai-opt-price">免费使用 <em>→</em></div>
+      </div>
+      <div style="text-align:center;margin-top:6px"><span style="font-size:12px;color:var(--text-3);cursor:pointer" onclick="closeModal('aiModal')">取消</span></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+// ===== DATA =====
+const T=[
+  {id:1,name:'张同学',school:'浙江大学',major:'数学与应用数学',grade:'大三',tags:['985','211'],ava:'👨‍🎓',
+   subs:['小学数学','初中数学','高中数学'],price:{小学:80,初中:100,高中:120},rate:4.9,dist:1.2,less:32,
+   sched:{一:{上:1,下:0,晚:0},二:{上:0,下:1,晚:0},三:{上:1,下:0,晚:1},四:{上:0,下:1,晚:1},五:{上:0,下:0,晚:1},六:{上:1,下:1,晚:1},日:{上:1,下:1,晚:1}},
+   slots:['周六上午','周日下午','周三晚上'],area:'西湖区·拱墅区',
+   awards:['2024 全国大学生数学建模一等奖','2023 浙江大学学业一等奖学金','2022 高中数学竞赛省一等奖'],
+   bio:'浙江大学数学系大三，擅长小学到高中数学辅导。教学风格耐心细致，善于引导数学思维。曾辅导多名学生数学成绩提升20分以上，周末均可授课。',
+   revs:[{n:'王同学妈妈',a:'👩',s:5,d:'2025-03-15',t:'耐心细致，孩子很喜欢，数学成绩从70分提到了90分！',tags:['耐心','讲解清晰']},{n:'李同学爸爸',a:'👨',s:4,d:'2025-02-20',t:'老师很负责，按时上门，辅导效果明显。',tags:['准时','负责']},{n:'赵同学妈妈',a:'👩',s:5,d:'2025-01-10',t:'教学有方法，注重思维训练，非常好。',tags:['有方法','思维训练']}],
+   vip:true,top:false},
+  {id:2,name:'陈同学',school:'杭州电子科技大学',major:'英语',grade:'大二',tags:[],ava:'👩‍🎓',
+   subs:['小学英语','初中英语'],price:{小学:60,初中:80},rate:4.7,dist:0.8,less:18,
+   sched:{一:{上:0,下:1,晚:1},二:{上:0,下:0,晚:1},三:{上:0,下:1,晚:0},四:{上:0,下:0,晚:1},五:{上:0,下:1,晚:1},六:{上:1,下:1,晚:0},日:{上:1,下:0,晚:0}},
+   slots:['周一下午','周三下午','周六上午'],area:'西湖区',
+   awards:['2024 全国大学生英语竞赛二等奖','CET-6 620分'],
+   bio:'杭电英语专业大二，擅长小学初中英语辅导。善于情景教学和趣味互动提升英语兴趣，口语发音标准。',
+   revs:[{n:'刘同学妈妈',a:'👩',s:5,d:'2025-04-02',t:'发音很标准，孩子英语口语进步很大！',tags:['发音标准','有耐心']}],
+   vip:false,top:false},
+  {id:3,name:'王同学',school:'浙江工业大学',major:'物理',grade:'研一',tags:['211'],ava:'🧑‍🎓',
+   subs:['初中物理','高中物理','初中数学'],price:{初中:90,高中:110},rate:4.8,dist:2.5,less:45,
+   sched:{一:{上:0,下:0,晚:1},二:{上:0,下:1,晚:0},三:{上:0,下:0,晚:1},四:{上:0,下:1,晚:0},五:{上:0,下:0,晚:1},六:{上:1,下:1,晚:1},日:{上:1,下:0,晚:0}},
+   slots:['周二下午','周四下午','周六全天'],area:'拱墅区·西湖区',
+   awards:['2024 浙江省研究生学业奖学金','2023 全国物理竞赛省二等奖'],
+   bio:'浙工大物理系研一，带过10余名初高中物理学生。善于用生活实例解释抽象物理概念，帮助建立物理直觉。',
+   revs:[{n:'孙同学爸爸',a:'👨',s:5,d:'2025-05-01',t:'物理讲得特别透彻，孩子终于开窍了！',tags:['讲解透彻','经验丰富']},{n:'周同学妈妈',a:'👩',s:5,d:'2025-03-28',t:'研究生水平确实不一样，高中物理讲得通俗易懂。',tags:['专业','易懂']}],
+   vip:true,top:true},
+  {id:4,name:'林同学',school:'中国美术学院',major:'语文写作',grade:'大三',tags:[],ava:'👩‍🎓',
+   subs:['小学语文','初中语文','高中语文'],price:{小学:70,初中:90,高中:100},rate:4.6,dist:3.1,less:12,
+   sched:{一:{上:0,下:1,晚:0},二:{上:0,下:0,晚:0},三:{上:0,下:1,晚:0},四:{上:0,下:0,晚:0},五:{上:0,下:0,晚:0},六:{上:1,下:0,晚:0},日:{上:1,下:1,晚:0}},
+   slots:['周一下午','周三下午','周日上午'],area:'上城区·西湖区',
+   awards:['2024 校园文学创作大赛一等奖'],
+   bio:'中国美院大三，擅长语文阅读理解和写作辅导。善于创意思维引导写作，注重方法论。',
+   revs:[{n:'吴同学妈妈',a:'👩',s:4,d:'2025-04-15',t:'写作辅导有创意，孩子作文进步明显。',tags:['有创意','写作好']}],
+   vip:false,top:false},
+  {id:5,name:'赵同学',school:'浙江大学',major:'计算机科学',grade:'大四',tags:['985','211'],ava:'🧑‍💻',
+   subs:['初中数学','高中数学','高中物理'],price:{初中:90,高中:120},rate:5.0,dist:1.5,less:56,
+   sched:{一:{上:0,下:0,晚:1},二:{上:0,下:0,晚:1},三:{上:0,下:0,晚:1},四:{上:0,下:0,晚:1},五:{上:0,下:0,晚:1},六:{上:1,下:1,晚:1},日:{上:1,下:1,晚:1}},
+   slots:['工作日晚间','周末全天'],area:'西湖区·滨江区',
+   awards:['2024 ACM程序设计竞赛亚洲区域赛银牌','2023 浙江大学学业特等奖学金','2022 全国数学竞赛省一等奖'],
+   bio:'浙大计算机大四保研，时间充裕。数理基础极强，带过20余名学生平均提分15+。注重底层逻辑，拒绝题海战术。',
+   revs:[{n:'钱同学爸爸',a:'👨',s:5,d:'2025-05-10',t:'学霸中的学霸，物理数学都能教，非常推荐！',tags:['学霸','逻辑清晰']},{n:'郑同学妈妈',a:'👩',s:5,d:'2025-04-22',t:'孩子数学从60分提到85分！',tags:['提分明显','逻辑强']},{n:'冯同学爸爸',a:'👨',s:5,d:'2025-03-15',t:'教学有体系，不是单纯刷题。',tags:['有体系','不刷题']}],
+   vip:true,top:false}
+];
+
+const demands=[
+  {id:1,subj:'初中数学',grade:'初二',type:'培优拔高',budget:'¥80-120/时',freq:'每周2次',dist:1.2,addr:'西湖区文三路',note:'孩子初二数学薄弱，需耐心老师，希望周六上午上门',urgent:true},
+  {id:2,subj:'小学英语',grade:'四年级',type:'作业辅导',budget:'¥50-80/时',freq:'每周3次',dist:0.6,addr:'西湖区紫荆花路',note:'孩子四年级英语基础差，需加强语法和词汇'},
+  {id:3,subj:'高中物理',grade:'高二',type:'考前提分',budget:'¥120+/时',freq:'每周2次',dist:2.8,addr:'拱墅区大关路',note:'高二物理电磁学部分薄弱，期末考前冲刺',urgent:true},
+  {id:4,subj:'初中语文',grade:'初三',type:'培优拔高',budget:'¥80-120/时',freq:'每周1次',dist:3.5,addr:'上城区延安路',note:'初三语文阅读理解失分多，需提升答题技巧'},
+];
+
+let isVip=false,identity='parent',selPlan='year',views=0,MAX_V=10;
+
+// ===== RENDER =====
+function renderParentCards(){
+  document.getElementById('parentCards').innerHTML=T.map(t=>`
+    <div class="card-item" style="position:relative" onclick="openDetail(${t.id})">
+      <div class="tc">
+        <div class="tc-left">${t.ava}</div>
+        <div class="tc-right">
+          <div class="tc-r1">
+            <span class="tc-name">${t.name}</span>
+            ${t.tags.map(g=>`<span class="tc-tag t${g}">${g}</span>`).join('')}
+            ${t.vip?'<span class="tc-tag tvip">💎</span>':''}
+            ${t.top?'<span class="tc-tag ttop">置顶</span>':''}
+          </div>
+          <div class="tc-school">${t.school} · ${t.major} · ${t.grade}</div>
+          <div class="tc-r2">${t.subs.map(s=>`<span class="tc-sub">${s}</span>`).join('')}</div>
+          <div class="tc-r3">
+            <span class="tc-price">¥${Object.values(t.price)[0]}<em>/时</em></span>
+            <span class="tc-star">⭐${t.rate}</span>
+            <span class="tc-dist">📍${t.dist}km</span>
+            ${t.less?`<span class="tc-dist">📚${t.less}课时</span>`:''}
+          </div>
+          <div class="tc-r4">
+            ${t.slots.slice(0,2).map(s=>`<span class="tc-slot">${s}</span>`).join('')}
+            ${!isVip?`<span class="tc-slot-lock" onclick="event.stopPropagation();showVipM('schedule')">🔒完整时段</span>`:`<span class="tc-slot-lock" style="background:var(--primary-light);color:var(--primary)" onclick="event.stopPropagation();openDetail(${t.id})">查看全部 ›</span>`}
+          </div>
+        </div>
+      </div>
+      <span class="tc-fav" onclick="event.stopPropagation();this.classList.toggle('on');this.textContent=this.classList.contains('on')?'♥':'♡';showToast(this.classList.contains('on')?'已收藏':'已取消')">♡</span>
+    </div>`).join('');
+}
+
+function renderStuDemands(){
+  document.getElementById('stuDemands').innerHTML=demands.map(d=>`
+    <div class="demand-card">
+      <div class="dc-top">
+        <span class="dc-tag subj">${d.subj}</span>
+        <span class="dc-tag grade">${d.grade}</span>
+        ${d.urgent?'<span class="dc-tag urgent">急</span>':''}
+        <span class="dc-title">${d.type}</span>
+      </div>
+      <div class="dc-info">
+        预算：<em>${d.budget}</em> ｜ 频次：${d.freq}<br>
+        ${!isVip?`备注：${d.note.slice(0,12)}...`:`备注：${d.note}`}
+      </div>
+      <div class="dc-bottom">
+        <span class="dc-dist">📍 ${d.dist}km</span>
+        <span class="dc-btn ${isVip?'free':'lock'}" onclick="${isVip?`showToast('投递成功')`:`showVipM('apply')`}">${isVip?'投递报名':'🔒 投递(会员)'}</span>
+      </div>
+    </div>`).join('');
+}
+
+function openDetail(id){
+  if(!isVip&&++views>MAX_V){showVipM('views');views--;return}
+  const t=T.find(x=>x.id===id);if(!t)return;
+  const days=['一','二','三','四','五','六','日'],tims=['上','下','晚'],tLab=['上午','下午','晚上'];
+  let schedHTML='';
+  if(isVip){
+    schedHTML=`<div class="week-sched"><div class="ws-head"><div></div>${days.map(d=>`<div>周${d}</div>`).join('')}</div><div class="ws-body">${tims.map((ti,ix)=>`<div class="ws-label">${tLab[ix]}</div>${days.map(d=>{const a=t.sched[d]&&t.sched[d][ti];return`<div class="ws-cell ${a?'ok':'no'}">${a?'✓':'—'}</div>`}).join('')}`).join('')}</div></div><div class="ws-legend"><span><span class="leg-box g"></span>✓ 空闲可授课</span><span><span class="leg-box gr"></span>— 暂不可</span></div>`;
+  }else{
+    schedHTML=`<div style="position:relative"><div class="week-sched" style="filter:blur(3px)"><div class="ws-head"><div></div>${days.map(d=>`<div>周${d}</div>`).join('')}</div><div class="ws-body">${tims.map((ti,ix)=>`<div class="ws-label">${tLab[ix]}</div>${days.map(d=>{const a=t.sched[d]&&t.sched[d][ti];return`<div class="ws-cell lk">${a?'✓':'—'}</div>`}).join('')}`).join('')}</div></div><div class="ws-lock-overlay"><div class="lock-icon">🔒</div><div class="lock-text">完整日历仅会员可查看</div><div class="lock-sub">简略：${t.slots.join('、')}</div><div class="ws-lock-btn" onclick="showVipM('schedule')">开通会员查看 💎</div></div></div>`;
+  }
+
+  document.getElementById('detBody').innerHTML=`
+    <div class="det-header">
+      <div class="det-avatar">${t.ava}</div>
+      <div class="det-name">${t.name}</div>
+      <div class="det-school">${t.school} · ${t.major} · ${t.grade}</div>
+      <div class="det-badges">
+        ${t.tags.map(g=>`<span class="det-badge ${g==='985'||g==='211'?'b985':''}">${g}</span>`).join('')}
+        <span class="det-badge">⭐${t.rate}</span>
+        <span class="det-badge">已授${t.less}课时</span>
+      </div>
+      <div class="det-verify">✅ 已实名认证 · 学生证已核验</div>
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><span class="ico">📚</span>擅长学科 + 定价</div>
+      <div class="tc-r2" style="margin-bottom:8px">${t.subs.map(s=>`<span class="tc-sub">${s}</span>`).join('')}</div>
+      ${Object.entries(t.price).map(([k,v])=>`<div class="p-row"><span class="p-level">${k}</span><span class="p-val">¥${v}/课时</span></div>`).join('')}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><span class="ico">📅</span>可授课时间${!isVip?'<span class="lock-hint">🔒 会员可查看</span>':''}</div>
+      ${schedHTML}
+    </div>
+    <div class="det-sec"><div class="det-sec-title"><span class="ico">📍</span>可上门区域</div><div style="font-size:12px;color:var(--text-2)">${t.area}</div></div>
+    <div class="det-sec">
+      <div class="det-sec-title"><span class="ico">🏆</span>获奖经历${!isVip?'<span class="lock-hint">🔒 会员可查看</span>':''}</div>
+      ${isVip?t.awards.map(a=>`<div class="awd"><span class="trophy">🏆</span>${a}</div>`).join(''):`<div style="text-align:center;padding:14px;background:var(--bg-3);border-radius:8px"><div style="font-size:24px;margin-bottom:4px">🔒</div><div style="font-size:11px;color:var(--text-3);margin-bottom:6px">完整获奖经历仅会员可查看</div><div style="color:var(--accent);font-size:12px;font-weight:600;cursor:pointer" onclick="showVipM('awards')">开通会员 💎</div></div>`}
+    </div>
+    <div class="det-sec"><div class="det-sec-title"><span class="ico">📝</span>个人简介</div><div style="font-size:12px;color:var(--text-2);line-height:1.7">${t.bio}</div></div>
+    <div class="det-sec">
+      <div class="det-sec-title"><span class="ico">⭐</span>过往评价 (${t.revs.length}条)${!isVip?'<span class="lock-hint">🔒 会员可查看</span>':''}</div>
+      ${(isVip?t.revs:t.revs.slice(0,1)).map(r=>`<div class="rev"><div class="rev-top"><span class="rev-ava">${r.a}</span><span class="rev-name">${r.n}</span><span class="rev-stars">${'⭐'.repeat(r.s)}</span><span class="rev-date">${r.d}</span></div><div class="rev-text">${r.t}</div><div class="rev-tags">${r.tags.map(tg=>`<span class="rev-tag">${tg}</span>`).join('')}</div></div>`).join('')}
+      ${!isVip&&t.revs.length>1?`<div class="rev-lock">共${t.revs.length}条评价，<a onclick="showVipM('reviews')">开通会员查看全部 💎</a></div>`:''}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><span class="ico">🤖</span>AI学情诊断</div>
+      <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:12px;color:var(--text-2)">填写孩子薄弱知识点，AI生成辅导规划</div><div style="font-size:10px;color:var(--text-3);margin-top:1px">会员免费 | 非会员 ¥19.9/次</div></div><div style="background:var(--accent);color:#fff;padding:5px 14px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer" onclick="showVipM('ai')">立即使用</div></div>
+    </div>
+    <div style="height:56px"></div>`;
+
+  document.getElementById('detBot').innerHTML=`
+    <div class="db-act" onclick="this.classList.toggle('on');this.querySelector('.db-ico').textContent=this.classList.contains('on')?'♥':'♡';showToast(this.classList.contains('on')?'已收藏':'已取消')"><span class="db-ico">♡</span>收藏</div>
+    <div class="db-act" onclick="showToast('跳转私信')"><span class="db-ico">💬</span>私信</div>
+    <div class="db-btn ${isVip?'blue':'gray'}" onclick="${isVip?'showToast(\'预约试课成功\')':'showVipM(\'trial\')'}">${isVip?'预约试课':'🔒 预约试课'}</div>
+    <div class="db-btn ${isVip?'orange':'gray'}" onclick="${isVip?'showToast(\'生成上课记录\')':'showVipM(\'order\')'}">${isVip?'正式下单':'🔒 正式下单'}</div>`;
+  switchPage('pg-detail');
+}
+
+function renderVipPage(){
+  const isStu=identity==='student';
+  document.getElementById('vipBody').innerHTML=`
+    <div class="vip-banner-top">
+      <div class="vb-icon">💎</div>
+      <div class="vb-title">学霸到家${isStu?'教员':'家长'}会员</div>
+      <div class="vb-sub">${isStu?'优先接单 · 简历加权曝光 · AI优化教学简历':'解锁全量师资 + AI学情分析 + 无限私信'}<br>${isStu?'让更多家长看到你的家教实力':'让孩子找到最合适的在校大学生家教'}</div>
+    </div>
+    <div class="vp-plans">
+      ${isStu?`
+        <div class="vp-card on" onclick="selVip(this,'month')"><div class="vp-name">月度会员</div><div class="vp-price">¥29<em>/30天</em></div></div>
+      `:`
+        <div class="vp-card ${selPlan==='month'?'on':''}" onclick="selVip(this,'month')"><div class="vp-name">月卡</div><div class="vp-price">¥39<em>/30天</em></div><div style="font-size:10px;color:var(--text-3);margin-top:2px">月度试用</div></div>
+        <div class="vp-card ${selPlan==='year'?'on':''}" onclick="selVip(this,'year')"><div class="vp-badge">推荐</div><div class="vp-name">年卡</div><div class="vp-price">¥299<em>/365天</em></div><div class="vp-save">省¥169</div></div>
+      `}
+    </div>
+    <div class="vp-priv">
+      <div class="vp-priv-title">会员专属特权</div>
+      ${isStu?`
+        <div class="vp-item"><span class="vp-ico">🚀</span>无上限投递家长招聘需求</div>
+        <div class="vp-item"><span class="vp-ico">🔍</span>简历搜索排序加权，优先展示前排</div>
+        <div class="vp-item"><span class="vp-ico">📬</span>系统智能推送精准匹配订单</div>
+        <div class="vp-item"><span class="vp-ico">🤖</span>AI自动优化个人简介、课时定价参考分析</div>
+        <div class="vp-item"><span class="vp-ico">🏷️</span>985/211/竞赛获奖标签高亮加权</div>
+        <div class="vp-item"><span class="vp-ico">💬</span>无限主动私信家长</div>
+      `:`
+        <div class="vp-item"><span class="vp-ico">📅</span>不限次数查看老师完整周课表、全部历史评价</div>
+        <div class="vp-item"><span class="vp-ico">📌</span>招聘需求免费置顶7天（每月1次）</div>
+        <div class="vp-item"><span class="vp-ico">🤖</span>AI智能就近匹配3位适配大学生</div>
+        <div class="vp-item"><span class="vp-ico">💬</span>无限私信所有教员、免费预约试课</div>
+        <div class="vp-item"><span class="vp-ico">📊</span>每月2份免费AI学情诊断报告</div>
+        <div class="vp-item"><span class="vp-ico">🎧</span>专属人工客服协助纠纷协调</div>
+      `}
+    </div>
+    <div class="vp-cmp">
+      <div class="vp-cmp-title">免费版 vs 会员版</div>
+      <table class="vp-tbl">
+        <tr><th>功能</th><th>免费版</th><th>会员版</th></tr>
+        ${isStu?`
+          <tr><td>投递招聘</td><td class="cl">每日5条 🔒</td><td class="co">无上限 ✅</td></tr>
+          <tr><td>搜索排序</td><td class="cl">普通排序 🔒</td><td class="co">加权优先 ✅</td></tr>
+          <tr><td>智能推送</td><td class="cl">无 🔒</td><td class="co">精准匹配 ✅</td></tr>
+          <tr><td>AI简历优化</td><td class="cl">¥29/份 🔒</td><td class="co">会员免费 ✅</td></tr>
+          <tr><td>主动私信</td><td class="cl">每日5次 🔒</td><td class="co">无限次 ✅</td></tr>
+        `:`
+          <tr><td>查看老师</td><td class="cl">每日10位 🔒</td><td class="co">不限次数 ✅</td></tr>
+          <tr><td>完整课表</td><td class="cl">简略时段 🔒</td><td class="co">完整日历 ✅</td></tr>
+          <tr><td>私信老师</td><td class="cl">每日3次 🔒</td><td class="co">无限次 ✅</td></tr>
+          <tr><td>预约试课</td><td class="cl">不可 🔒</td><td class="co">免费 ✅</td></tr>
+          <tr><td>AI诊断</td><td class="cl">¥19.9/次 🔒</td><td class="co">每月2份 ✅</td></tr>
+          <tr><td>招聘置顶</td><td class="cl">不可 🔒</td><td class="co">每月1次 ✅</td></tr>
+        `}
+      </table>
+    </div>
+    <div class="vp-bottom">
+      <div class="vp-agree"><span class="vp-chk on" id="vpChk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':''">✓</span>已阅读并同意<a href="javascript:void(0)">《会员服务协议》</a><a href="javascript:void(0)">《自动续费协议》</a></div>
+      <div class="vp-buy" onclick="buyVip()">💎 立即开通 · ${isStu?'¥29/月':(selPlan==='year'?'¥299/年':'¥39/月')}</div>
+      <div class="vp-auto">自动续费可选，随时可在微信中解约</div>
+    </div>`;
+}
+
+function renderMyPage(){
+  const isStu=identity==='student';
+  document.getElementById('myBody').innerHTML=`
+    <div class="my-hd">
+      <div class="my-ava">${isStu?'🧑‍🎓':'👩'}</div>
+      <div class="my-info">
+        <div class="my-name">${isStu?'王同学':'李同学妈妈'}</div>
+        <div class="my-role">${isStu?'大学生身份':'家长身份'} <span class="r-tag">${isStu?'浙江大学':'已认证'}</span></div>
+      </div>
+    </div>
+    <div class="my-vip ${isVip?'':'not'}" onclick="switchPage('pg-vip')">
+      <span class="mv-ico">💎</span>
+      <div class="mv-info">
+        <div class="mv-st">${isVip?'会员有效期内':'尚未开通会员'}</div>
+        <div class="mv-exp">${isVip?'有效期至 2027-06-06':'开通后解锁全量师资+AI学情分析'}</div>
+      </div>
+      <span class="mv-btn">${isVip?'续费':'立即开通'}</span>
+    </div>
+    <div class="my-vf">
+      <div class="my-vf-left"><span class="my-vf-ico ok">✅</span>实名认证：已通过</div>
+      <span class="my-vf-arrow">›</span>
+    </div>
+    <div class="my-sec">
+      ${isStu?`
+        <div class="my-row" onclick="showToast('我的档案')"><span class="my-row-ico">📋</span><span class="my-row-txt">我的家教档案</span><span class="my-row-extra" style="color:var(--green)">已上架</span><span class="my-row-arr">›</span></div>
+        <div class="my-row" onclick="showToast('接单管理')"><span class="my-row-ico">📦</span><span class="my-row-txt">接单管理</span><span class="my-row-badge">3</span><span class="my-row-arr">›</span></div>
+        <div class="my-row" onclick="showToast('收款记录')"><span class="my-row-ico">💰</span><span class="my-row-txt">收款记录</span><span class="my-row-arr">›</span></div>
+      `:`
+        <div class="my-row" onclick="showToast('子女档案')"><span class="my-row-ico">👦</span><span class="my-row-txt">子女管理</span><span class="my-row-extra">2个孩子</span><span class="my-row-arr">›</span></div>
+        <div class="my-row" onclick="showToast('我的订单')"><span class="my-row-ico">📋</span><span class="my-row-txt">我的招聘订单</span><span class="my-row-badge">3</span><span class="my-row-arr">›</span></div>
+        <div class="my-row" onclick="showToast('我的收藏')"><span class="my-row-ico">⭐</span><span class="my-row-txt">我的收藏</span><span class="my-row-extra">5位老师</span><span class="my-row-arr">›</span></div>
+      `}
+      <div class="my-row" onclick="showToast('我的评价')"><span class="my-row-ico">📝</span><span class="my-row-txt">我的评价</span><span class="my-row-arr">›</span></div>
+    </div>
+    <div class="my-sec">
+      <div class="my-row" onclick="switchPage('pg-vip')"><span class="my-row-ico">💎</span><span class="my-row-txt">会员中心</span><span class="my-row-extra" style="color:${isVip?'var(--green)':'var(--accent)'}">${isVip?'已开通':'未开通'}</span><span class="my-row-arr">›</span></div>
+      <div class="my-row" onclick="showVipM('ai')"><span class="my-row-ico">🤖</span><span class="my-row-txt">AI学情诊断</span><span class="my-row-extra" style="color:var(--text-3)">${isVip?'免费':'¥19.9/次'}</span><span class="my-row-arr">›</span></div>
+    </div>
+    <div class="my-sec">
+      <div class="my-row" onclick="showToast('联系客服')"><span class="my-row-ico">📞</span><span class="my-row-txt">联系客服</span><span class="my-row-arr">›</span></div>
+      <div class="my-row" onclick="showToast('用户协议')"><span class="my-row-ico">📄</span><span class="my-row-txt">用户协议</span><span class="my-row-arr">›</span></div>
+      <div class="my-row" onclick="showToast('隐私政策')"><span class="my-row-ico">🔒</span><span class="my-row-txt">隐私政策</span><span class="my-row-arr">›</span></div>
+      <div class="my-row" onclick="showToast('学霸到家 v1.0.0')"><span class="my-row-ico">ℹ️</span><span class="my-row-txt">关于学霸到家</span><span class="my-row-arr">›</span></div>
+    </div>
+    <div style="text-align:center;padding:16px;font-size:10px;color:var(--text-4)">学霸到家 v1.0.0 · 纯撮合 · 零抽成 · 真实认证</div>`;
+}
+
+// ===== FORM TAGS =====
+function renderFormTags(){
+  const subs=['语文','数学','英语','物理','化学','生物','政治','历史','地理'];
+  const typs=['作业辅导','培优拔高','考前提分'];
+  const bdgt=['¥50-80/时','¥80-120/时','¥120+/时','面议'];
+  const freq=['每周1次','每周2次','每周3次','每周4次+'];
+  document.getElementById('fSubjects').innerHTML=subs.map(s=>`<span class="fi-tag" onclick="this.classList.toggle('on')">${s}</span>`).join('');
+  document.getElementById('fTypes').innerHTML=typs.map(s=>`<span class="fi-tag" onclick="singleSel(this,'fTypes')">${s}</span>`).join('');
+  document.getElementById('fBudget').innerHTML=bdgt.map(s=>`<span class="fi-tag-pr" onclick="singleSel(this,'fBudget')">${s}</span>`).join('');
+  document.getElementById('fFreq').innerHTML=freq.map(s=>`<span class="fi-tag-pr" onclick="singleSel(this,'fFreq')">${s}</span>`).join('');
+}
+function singleSel(el,pid){document.getElementById(pid).querySelectorAll('.fi-tag,.fi-tag-pr').forEach(t=>t.classList.remove('on'));el.classList.add('on')}
+
+// ===== PAGE SWITCH =====
+function switchPage(pid){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(pid).classList.add('active');
+  const map={'pg-home':0,'pg-msg':1,'pg-post':2,'pg-vip':3,'pg-my':4};
+  document.querySelectorAll('.tab-item,.tab-post-wrap').forEach(t=>t.classList.remove('active'));
+  const idx=map[pid];
+  if(idx!==undefined){const tabs=document.querySelectorAll('.tab-item,.tab-post-wrap');if(tabs[idx])tabs[idx].classList.add('active')}
+  window.scrollTo(0,0);
+}
+function switchTab(el,pid){switchPage(pid)}
+
+// ===== IDENTITY =====
+function switchIdentity(id,el){
+  identity=id;
+  document.querySelectorAll('.id-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('parent-view').style.display=id==='parent'?'block':'none';
+  document.getElementById('student-view').style.display=id==='student'?'block':'none';
+  renderVipPage();renderMyPage();
+}
+
+// ===== FILTER =====
+function toggleFilter(el){document.querySelectorAll('.filter-cell').forEach(f=>f.classList.remove('active','open'));el.classList.add('active','open');showToast('筛选面板（原型演示）')}
+
+// ===== VIP MODAL =====
+const MC={
+  schedule:{t:'🔒 解锁完整课表',s:'开通会员查看老师每周详细空闲时段',f:['完整7×3周空闲授课日历可视化','精准选择试课时间段','不限次数查看所有老师课表'],p:'💎 月卡 ¥39 | 年卡 ¥299'},
+  reviews:{t:'🔒 解锁全部评价',s:'开通会员查看老师全部家长评价',f:['查看老师全部过往真实评价','不限次数查看老师完整资料','无限私信所有教员'],p:'💎 月卡 ¥39 | 年卡 ¥299'},
+  awards:{t:'🔒 解锁获奖履历',s:'开通会员查看老师获奖经历',f:['完整获奖经历与竞赛荣誉','不限次数查看老师完整资料','AI智能就近匹配3位适配师资'],p:'💎 月卡 ¥39 | 年卡 ¥299'},
+  views:{t:'🔒 今日查看次数已用完',s:'开通会员不限次数查看全平台老师',f:['不限次数查看全平台老师完整资料','完整周空闲授课日历','全部过往真实评价'],p:'💎 月卡 ¥39 | 年卡 ¥299'},
+  trial:{t:'🔒 解锁预约试课',s:'开通会员免费预约试课',f:['免费预约线下试课','无限私信沟通上课细节','AI智能就近匹配3位适配师资'],p:'💎 月卡 ¥39 | 年卡 ¥299'},
+  order:{t:'🔒 解锁正式下单',s:'开通会员生成上课记录',f:['生成正式上课记录+电子协议','无限私信沟通上课细节','招聘需求免费置顶7天'],p:'💎 月卡 ¥39 | 年卡 ¥299'},
+  apply:{t:'🔒 解锁无限投递',s:'今日免费投递次数已用完',f:['无上限投递家长招聘需求','简历搜索排序加权优先展示','系统智能推送精准匹配订单'],p:'💎 月卡 ¥29/月'},
+  ai:'ai'
+};
+function showVipM(type){if(type==='ai'){document.getElementById('aiModal').classList.add('show');return}const c=MC[type]||MC.schedule;document.getElementById('mTitle').textContent=c.t;document.getElementById('mSub').textContent=c.s;document.getElementById('mFeats').innerHTML=c.f.map(f=>`<div class="m-feat"><span class="ck">✅</span>${f}</div>`).join('');document.getElementById('mPrice').textContent=c.p;document.getElementById('vipModal').classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+
+// ===== VIP BUY =====
+function selVip(el,plan){selPlan=plan;document.querySelectorAll('.vp-card').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
+function buyVip(){const c=document.getElementById('vpChk');if(!c.classList.contains('on')){showToast('请先同意服务协议');return}showToast('🎉 会员开通成功！');isVip=true;views=0;setTimeout(()=>{renderParentCards();renderStuDemands();renderMyPage();switchPage('pg-home')},1000)}
+
+// ===== TOAST =====
+let tt;function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== INIT =====
+renderParentCards();renderStuDemands();renderFormTags();renderVipPage();renderMyPage();
+</script>
+</body>
+</html>
