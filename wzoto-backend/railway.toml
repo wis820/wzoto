@@ -1,0 +1,9 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "java -Xmx512m -Xms256m -jar wzoto-interfaces/target/wzoto-interfaces-1.0.0-SNAPSHOT.jar"
+healthcheckPath = "/api/auth/dev-login"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3

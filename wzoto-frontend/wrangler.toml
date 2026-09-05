@@ -1,0 +1,7 @@
+name = "wzoto-frontend"
+compatibility_date = "2026-09-05"
+pages_build_output_dir = "dist"
+
+[vars]
+# 生产环境API地址（部署后端后更新此值）
+VITE_API_BASE_URL = ""
