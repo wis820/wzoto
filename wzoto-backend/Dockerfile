@@ -17,4 +17,5 @@ COPY --from=builder /app/wzoto-interfaces/target/wzoto-interfaces-1.0.0-SNAPSHOT
 ENV PORT=8080
 EXPOSE $PORT
 ENV JAVA_OPTS="-Xmx400m -Xms200m"
+ENV SPRING_PROFILES_ACTIVE=prod
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --server.port=$PORT"]

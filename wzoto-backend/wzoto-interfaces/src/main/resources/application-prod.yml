@@ -1,25 +1,35 @@
+# =============================================
+# 生产环境配置 (Render/Koyeb/免费云服务器)
+# 使用 H2 内存数据库，启动时自动建表+灌入种子数据
+# 激活方式: --spring.profiles.active=prod
+# =============================================
+
 server:
   port: ${PORT:8080}
   servlet:
     context-path: /
 
 spring:
+  # 禁用 Redis（生产环境无免费 Redis）
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+  # H2 内存数据库（MySQL 兼容模式）
   datasource:
-    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
-    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/wzoto?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:${MYSQL_PASSWORD:root}}
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:}
-      database: 0
-
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:wzoto;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;NON_KEYWORDS=USER,ORDER,STATUS,KEY,VALUE,LEVEL,TYPE,SCORE,COMMENT
+    username: sa
+    password:
+  # 禁用 Spring Boot 自动初始化（由 DataInitializer 手动控制顺序）
+  sql:
+    init:
+      mode: never
+  # H2 Console（调试用，生产可关闭）
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
@@ -41,8 +51,6 @@ wzoto:
   wechat:
     app-id: ${WECHAT_APP_ID:}
     app-secret: ${WECHAT_APP_SECRET:}
-  # AI配置（OpenAI兼容API，适配SpringAI设计规范）
-  # enabled=true启用真实AI调用，默认false使用Mock模式
   ai:
     enabled: ${AI_ENABLED:false}
     base-url: ${AI_BASE_URL:https://api.openai.com}
@@ -52,5 +60,5 @@ wzoto:
 
 logging:
   level:
-    com.wzoto: debug
-    com.baomidou.mybatisplus: debug
+    com.wzoto: info
+    com.baomidou.mybatisplus: warn
