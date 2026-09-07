@@ -14,6 +14,7 @@ RUN mvn clean package -DskipTests -B
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=builder /app/wzoto-interfaces/target/wzoto-interfaces-1.0.0-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENV JAVA_OPTS="-Xmx512m -Xms256m"
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --server.port=8080"]
+ENV PORT=8080
+EXPOSE $PORT
+ENV JAVA_OPTS="-Xmx400m -Xms200m"
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --server.port=$PORT"]
